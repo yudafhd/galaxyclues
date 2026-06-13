@@ -1,12 +1,15 @@
 import { Canvas } from '@react-three/fiber'
-import { KeyboardControls, Loader, Stars } from '@react-three/drei'
+import { KeyboardControls, Stars } from '@react-three/drei'
 import { UserCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import LoadingOverlay from './components/LoadingOverlay'
 import PlayerController from './components/PlayerController'
 
 const movementMap = [
   { name: 'left', keys: ['ArrowLeft', 'KeyA'] },
   { name: 'right', keys: ['ArrowRight', 'KeyD'] },
+  { name: 'up', keys: ['ArrowUp', 'KeyW'] },
+  { name: 'down', keys: ['ArrowDown', 'KeyS'] },
 ]
 
 export default function App() {
@@ -73,10 +76,13 @@ export default function App() {
         </div>
 
         <div className="hint">
-          {isCrashed ? 'Dino terkena meteor. Tekan spasi untuk mulai lagi.' : 'Gunakan A/D untuk menghindari meteor.'}
+          {isCrashed
+            ? 'Dino terkena meteor. Tekan spasi untuk mulai lagi.'
+            : 'Gunakan W A S D atau tombol panah untuk menghindari meteor.'}
         </div>
+
+        <LoadingOverlay />
       </main>
-      <Loader />
     </KeyboardControls>
   )
 }

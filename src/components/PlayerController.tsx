@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import Dino from './Dino'
 import MeteorField from './MeteorField'
 
-type MovementControl = 'left' | 'right'
+type MovementControl = 'left' | 'right' | 'up' | 'down'
 
 const velocity = new THREE.Vector3()
 const direction = new THREE.Vector3()
@@ -13,6 +13,10 @@ const target = new THREE.Vector3()
 const desiredCameraPosition = new THREE.Vector3()
 const cameraOffset = new THREE.Vector3(-12, 6.5, 0)
 const lookAheadOffset = new THREE.Vector3(4.5, 1.85, 0)
+const minPlayerY = -2.1
+const maxPlayerY = 3.2
+const minPlayerZ = -12
+const maxPlayerZ = 0
 
 type PlayerControllerProps = {
   onCrash: () => void
@@ -41,7 +45,7 @@ export default function PlayerController({ onCrash, onMeteorPassed }: PlayerCont
 
     if (!player || !dino) return
 
-    const { left, right } = getKeys()
+    const { left, right, up, down } = getKeys()
     const speed = 4.6
     const hover = Math.sin(state.clock.elapsedTime * 1.8)
 
@@ -54,12 +58,14 @@ export default function PlayerController({ onCrash, onMeteorPassed }: PlayerCont
       dino.rotation.z += delta * 10
       dino.scale.setScalar(Math.max(0.08, 1 - crashTime.current * 0.62))
     } else {
-      direction.set(0, 0, Number(right) - Number(left))
+      direction.set(0, Number(up) - Number(down), Number(right) - Number(left))
 
       if (direction.lengthSq() > 0) {
         direction.normalize()
         velocity.copy(direction).multiplyScalar(speed * delta)
         player.position.add(velocity)
+        player.position.y = THREE.MathUtils.clamp(player.position.y, minPlayerY, maxPlayerY)
+        player.position.z = THREE.MathUtils.clamp(player.position.z, minPlayerZ, maxPlayerZ)
       }
 
       dino.position.y = 1.6 + hover * 0.28

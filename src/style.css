@@ -78,6 +78,65 @@ canvas {
   backdrop-filter: blur(8px);
 }
 
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(38, 72, 102, 0.3), transparent 34%),
+    rgba(7, 11, 18, 0.94);
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.loading-mark {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: #d8dee9;
+  border-radius: 50%;
+  animation: loading-spin 0.9s linear infinite;
+}
+
+.loading-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.loading-progress {
+  width: min(280px, calc(100vw - 64px));
+  height: 7px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.loading-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #d8dee9;
+  transition: width 180ms ease;
+}
+
+.loading-detail {
+  min-height: 18px;
+  margin-top: 9px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 560px) {
   .hint {
     bottom: 16px;

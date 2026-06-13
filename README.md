@@ -15,10 +15,13 @@ Controls:
 
 - Use `A` / `ArrowLeft` to move left.
 - Use `D` / `ArrowRight` to move right.
+- Use `W` / `ArrowUp` to move up.
+- Use `S` / `ArrowDown` to move down.
 - The camera follows behind the dino automatically.
 - Meteors spawn from the front. Dodge them to keep the dino floating.
 - Score increases by 1 for every meteor that passes the dino.
 - Press `Space` to restart after a meteor hit.
+- A loading overlay is shown while game assets download.
 
 ## Model Assets
 
