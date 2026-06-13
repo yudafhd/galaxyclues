@@ -1,0 +1,30 @@
+{
+  "name": "galaxyclues",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "verify:render": "node scripts/verify-render.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "latest",
+    "@react-three/fiber": "latest",
+    "@vitejs/plugin-react": "latest",
+    "lucide-react": "^1.18.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "three": "latest",
+    "vite": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/three": "latest",
+    "playwright": "^1.60.0",
+    "typescript": "latest"
+  }
+}
