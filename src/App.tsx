@@ -70,7 +70,7 @@ export default function App() {
         <div className="profile-panel">
           <UserCircle aria-hidden="true" size={28} strokeWidth={1.8} />
           <div>
-            <div className="profile-name">Dino Pilot</div>
+            <div className="profile-name">HADI TAMPAN</div>
             <div className="profile-score">Score {score}</div>
           </div>
         </div>
