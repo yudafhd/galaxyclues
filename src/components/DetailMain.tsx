@@ -1,5 +1,5 @@
 import { Gamepad2, Move, Play, Shield, Sparkles, Trophy } from 'lucide-react'
-import { GameCover } from './GameCard'
+import { CardCover } from './Card'
 import type { GameItem } from '../data/games'
 
 type DetailMainProps = {
@@ -39,7 +39,7 @@ export default function DetailMain({ game, onStartGame }: DetailMainProps) {
   return (
     <main className="mx-auto grid w-full max-w-[1180px] flex-1 gap-4 px-4 py-5 md:px-6">
       <section className="grid gap-4 lg:grid-cols-[minmax(320px,0.9fr)_minmax(0,1fr)]">
-        <GameCover coverImage={game.coverImage} name={game.name} large />
+        <CardCover coverImage={game.coverImage} name={game.name} large />
 
         <div className="card bg-base-200 shadow-xl">
           <div className="card-body justify-center">

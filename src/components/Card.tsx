@@ -1,15 +1,16 @@
 import { Canvas } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
-import { Star } from 'lucide-react'
-import type { GameItem } from '../data/games'
+import { Lock, Star } from 'lucide-react'
+import type { StoryItem } from '../data/stories'
 import { Dino } from '../game/dino-meteor-dodge'
+import { Image } from './ui'
 
-type GameCardProps = {
-  game: GameItem
+type CardProps = {
+  item: StoryItem
   onClick: () => void
 }
 
-export function GameCover({ coverImage, name, large = false }: { coverImage?: string; name: string; large?: boolean }) {
+export function CardCover({ coverImage, name, large = false }: { coverImage?: string; name: string; large?: boolean }) {
   return (
     <div
       className={[
@@ -19,7 +20,7 @@ export function GameCover({ coverImage, name, large = false }: { coverImage?: st
       aria-hidden="true"
     >
       {coverImage ? (
-        <img className="h-full w-full object-cover" src={coverImage} alt={name} loading="lazy" />
+        <Image wrapperClassName="h-full w-full rounded-none" imageClassName="object-cover" src={coverImage} alt={name} />
       ) : (
         <>
           <div className="absolute inset-0">
@@ -50,23 +51,38 @@ export function GameCover({ coverImage, name, large = false }: { coverImage?: st
   )
 }
 
-export default function GameCard({ game, onClick }: GameCardProps) {
+export default function Card({ item, onClick }: CardProps) {
+  const isPlayable = Boolean(item.gameCode)
+
   return (
-    <button className="card h-auto overflow-hidden bg-base-200 text-left shadow-xl transition hover:brightness-110" type="button" onClick={onClick}>
+    <button
+      className="card h-auto overflow-hidden bg-base-200 text-left shadow-xl transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+      type="button"
+      onClick={onClick}
+      disabled={!isPlayable}
+    >
       <div className="relative">
-        <span className="badge badge-success absolute left-2 top-2 z-10 font-black text-success-content">{game.type}</span>
-        <GameCover coverImage={game.coverImage} name={game.name} />
+        <span className={`badge absolute left-2 top-2 z-10 font-black ${isPlayable ? 'badge-success text-success-content' : 'badge-ghost'}`}>
+          {item.type}
+        </span>
+        {!isPlayable && (
+          <span className="badge badge-ghost absolute right-2 top-2 z-10 gap-1 font-black">
+            <Lock aria-hidden="true" size={12} />
+            Soon
+          </span>
+        )}
+        <CardCover coverImage={item.coverImage} name={item.title} />
       </div>
 
       <div className="card-body gap-2 p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="truncate text-base font-black text-base-content">{game.name}</h2>
-            <p className="text-sm font-semibold text-base-content/55">{game.category}</p>
+            <h2 className="truncate text-base font-black text-base-content">{item.title}</h2>
+            <p className="text-sm font-semibold text-base-content/55">{item.category}</p>
           </div>
           <div className="badge badge-ghost shrink-0 gap-1 font-black">
             <Star aria-hidden="true" size={14} fill="currentColor" />
-            {game.rating}
+            {item.rating}
           </div>
         </div>
       </div>

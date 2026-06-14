@@ -1,0 +1,83 @@
+[
+  {
+    "code": "dino-meteor-dodge",
+    "title": "Dino Meteor",
+    "category": "Save Earth",
+    "type": "Playable",
+    "rating": 92,
+    "coverImage": "/assets/meteor-dino-cover.png",
+    "gameCode": "dino-meteor-dodge"
+  },
+  {
+    "code": "lost-earth-signal",
+    "title": "Lost Earth Signal",
+    "category": "Investigation",
+    "type": "Story",
+    "rating": 88,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "mars-blackout",
+    "title": "Mars Blackout",
+    "category": "Mars Network",
+    "type": "Story",
+    "rating": 86,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "alien-noise",
+    "title": "Alien Noise",
+    "category": "Mystery",
+    "type": "Story",
+    "rating": 84,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "orbit-clues",
+    "title": "Orbit Clues",
+    "category": "Clue Hunt",
+    "type": "Story",
+    "rating": 83,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "broken-satellite",
+    "title": "Broken Satellite",
+    "category": "Repair",
+    "type": "Story",
+    "rating": 81,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "hero-awakens",
+    "title": "Hero Awakens",
+    "category": "Character",
+    "type": "Story",
+    "rating": 89,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "red-planet-gate",
+    "title": "Red Planet Gate",
+    "category": "Mars Mission",
+    "type": "Story",
+    "rating": 87,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "the-hidden-creature",
+    "title": "The Hidden Creature",
+    "category": "Alien Threat",
+    "type": "Story",
+    "rating": 90,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  },
+  {
+    "code": "restore-the-network",
+    "title": "Restore the Network",
+    "category": "Final Mission",
+    "type": "Story",
+    "rating": 94,
+    "coverImage": "/assets/meteor-dino-cover.png"
+  }
+]

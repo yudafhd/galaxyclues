@@ -7,11 +7,13 @@ import AppFooter from './components/AppFooter'
 import DetailMain from './components/DetailMain'
 import HomeMain from './components/HomeMain'
 import LoadingOverlay from './components/LoadingOverlay'
+import StoryMain from './components/StoryMain'
 import { getGameByCode } from './data/games'
-import { clearGestureInput, MeteorDinoBackground, MobileGestureControls, PlayerController } from './game/dino-meteor-dodge'
+import { clearGestureInput, DinoMeteorStoryBook, MeteorDinoBackground, MobileGestureControls, PlayerController } from './game/dino-meteor-dodge'
 
 const defaultGameCode = 'dino-meteor-dodge'
 const gameBasePath = '/game/'
+const storyPath = '/story'
 
 const movementMap = [
   { name: 'left', keys: ['ArrowLeft', 'KeyA'] },
@@ -20,10 +22,11 @@ const movementMap = [
   { name: 'down', keys: ['ArrowDown', 'KeyS'] },
 ]
 
-type Screen = 'home' | 'detail' | 'playing'
+type Screen = 'home' | 'story' | 'detail' | 'playing'
 
 function getScreenFromPath(): Screen {
   if (window.location.pathname.startsWith(gameBasePath)) return 'detail'
+  if (window.location.pathname === storyPath) return 'story'
 
   return 'home'
 }
@@ -40,6 +43,7 @@ export default function App() {
   const [isCrashed, setIsCrashed] = useState(false)
   const [restartKey, setRestartKey] = useState(0)
   const [score, setScore] = useState(0)
+  const [showHomeIntro, setShowHomeIntro] = useState(() => getScreenFromPath() === 'home')
   const selectedGame = getGameByCode(selectedGameCode)
 
   const restartGame = () => {
@@ -83,6 +87,14 @@ export default function App() {
     window.history.pushState(null, '', '/')
     setScreen('home')
     setIsCrashed(false)
+    setShowHomeIntro(false)
+  }
+
+  const openStory = () => {
+    clearGestureInput()
+    window.history.pushState(null, '', storyPath)
+    setScreen('story')
+    setIsCrashed(false)
   }
 
   const openGameDetail = (code: string) => {
@@ -106,7 +118,7 @@ export default function App() {
 
   return (
     <KeyboardControls map={movementMap}>
-      <main className="relative h-dvh w-full overflow-hidden bg-[#262625] text-base-content" data-theme="dark">
+      <main className="galaxy-page relative h-dvh w-full overflow-hidden text-base-content" data-theme="dark">
         {screen === 'playing' && (
           <Canvas
             shadows
@@ -141,16 +153,31 @@ export default function App() {
         )}
 
         {screen === 'home' && (
-          <section className="flex h-full flex-col overflow-y-auto bg-[linear-gradient(135deg,#30342d_0%,#2d2a2a_44%,#242423_100%)] text-base-content">
-            <AppHeader mode="home" onHome={goHome} />
-            <HomeMain onOpenGameDetail={openGameDetail} />
+          <section className="galaxy-page flex h-full flex-col overflow-y-auto text-base-content">
+            {!showHomeIntro && <AppHeader mode="home" onHome={goHome} onPrimaryAction={openStory} />}
+            <HomeMain
+              onOpenStory={openStory}
+              showIntro={showHomeIntro}
+              onFinishIntro={() => setShowHomeIntro(false)}
+            />
+          </section>
+        )}
+
+        {screen === 'story' && (
+          <section className="galaxy-page flex h-full flex-col overflow-y-auto text-base-content">
+            <AppHeader mode="home" onHome={goHome} onPrimaryAction={openStory} />
+            <StoryMain onOpenGameDetail={openGameDetail} />
           </section>
         )}
 
         {screen === 'detail' && (
-          <section className="flex h-full flex-col overflow-y-auto bg-[linear-gradient(135deg,#30342d_0%,#2d2a2a_44%,#242423_100%)] text-base-content">
+          <section className="galaxy-page flex h-full flex-col overflow-y-auto text-base-content">
             <AppHeader mode="detail" onHome={goHome} />
-            <DetailMain game={selectedGame} onStartGame={startGame} />
+            {selectedGame.code === defaultGameCode ? (
+              <DinoMeteorStoryBook game={selectedGame} onStartGame={startGame} />
+            ) : (
+              <DetailMain game={selectedGame} onStartGame={startGame} />
+            )}
             <AppFooter />
           </section>
         )}
