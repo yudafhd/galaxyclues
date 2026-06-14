@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import Dino from './Dino'
 import MeteorField from './MeteorField'
+import { getGestureInput } from '../gestureInput'
 
 type MovementControl = 'left' | 'right' | 'up' | 'down'
 
@@ -12,7 +13,9 @@ const direction = new THREE.Vector3()
 const target = new THREE.Vector3()
 const desiredCameraPosition = new THREE.Vector3()
 const cameraOffset = new THREE.Vector3(-12, 6.5, 0)
+const mobileCameraOffset = new THREE.Vector3(-15, 7.2, 0)
 const lookAheadOffset = new THREE.Vector3(4.5, 1.85, 0)
+const mobileLookAheadOffset = new THREE.Vector3(6, 1.95, 0)
 const minPlayerY = -2.1
 const maxPlayerY = 3.2
 const minPlayerZ = -12
@@ -24,7 +27,7 @@ type PlayerControllerProps = {
 }
 
 export default function PlayerController({ onCrash, onMeteorPassed }: PlayerControllerProps) {
-  const { camera } = useThree()
+  const { camera, size } = useThree()
   const [, getKeys] = useKeyboardControls<MovementControl>()
   const playerRef = useRef<THREE.Group>(null)
   const dinoRef = useRef<THREE.Group>(null)
@@ -58,7 +61,13 @@ export default function PlayerController({ onCrash, onMeteorPassed }: PlayerCont
       dino.rotation.z += delta * 10
       dino.scale.setScalar(Math.max(0.08, 1 - crashTime.current * 0.62))
     } else {
-      direction.set(0, Number(up) - Number(down), Number(right) - Number(left))
+      const gesture = getGestureInput()
+
+      direction.set(
+        0,
+        Number(up) - Number(down) + gesture.vertical,
+        Number(right) - Number(left) + gesture.horizontal,
+      )
 
       if (direction.lengthSq() > 0) {
         direction.normalize()
@@ -75,8 +84,12 @@ export default function PlayerController({ onCrash, onMeteorPassed }: PlayerCont
       dino.scale.setScalar(1)
     }
 
-    target.copy(player.position).add(lookAheadOffset)
-    desiredCameraPosition.copy(cameraOffset).applyAxisAngle(THREE.Object3D.DEFAULT_UP, player.rotation.y).add(player.position)
+    const isMobileViewport = size.width < 640
+    const activeCameraOffset = isMobileViewport ? mobileCameraOffset : cameraOffset
+    const activeLookAheadOffset = isMobileViewport ? mobileLookAheadOffset : lookAheadOffset
+
+    target.copy(player.position).add(activeLookAheadOffset)
+    desiredCameraPosition.copy(activeCameraOffset).applyAxisAngle(THREE.Object3D.DEFAULT_UP, player.rotation.y).add(player.position)
 
     camera.position.lerp(desiredCameraPosition, 1 - Math.exp(-4.5 * delta))
     camera.lookAt(target)
@@ -85,6 +98,10 @@ export default function PlayerController({ onCrash, onMeteorPassed }: PlayerCont
   return (
     <>
       <group ref={playerRef} position={[0, 0, -6]}>
+        <mesh position={[0.12, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.55, 0.48, 1]}>
+          <circleGeometry args={[1, 48]} />
+          <meshBasicMaterial color="#050507" transparent opacity={0.28} depthWrite={false} />
+        </mesh>
         <group ref={dinoRef}>
           <Dino />
         </group>

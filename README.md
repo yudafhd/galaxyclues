@@ -11,6 +11,18 @@ npm run dev
 
 Open the local URL Vite prints, usually `http://localhost:5173/`.
 
+Flow:
+
+- Start on the home page with header, game grid, and footer.
+- Click the Dino Meteor game card to open `/game/dino-meteor-dodge`.
+- Press `Mulai` on the detail screen to load and start the game.
+
+## Design System
+
+- Tailwind CSS is integrated through the official Vite plugin.
+- daisyUI is enabled as the Tailwind component system.
+- The app uses a white-purple glossy visual layer on top of daisyUI light components.
+
 Controls:
 
 - Use `A` / `ArrowLeft` to move left.
@@ -44,6 +56,7 @@ For Vercel, use:
 - Build Command: `npm run build`
 - Output Directory: `dist`
 - Install Command: `npm install`
+- `vercel.json` rewrites SPA routes such as `/game/dino-meteor-dodge` to `index.html`.
 
 ## Render Check
 

@@ -24,15 +24,15 @@ export default function LoadingOverlay() {
   if (!isVisible) return null
 
   return (
-    <div className="loading-overlay" role="status" aria-live="polite">
-      <div className="loading-mark" aria-hidden="true" />
-      <div className="loading-title">Loading Assets</div>
-      <div className="loading-progress">
-        <div className="loading-progress-fill" style={{ width: `${total > 0 ? roundedProgress : 18}%` }} />
-      </div>
-      <div className="loading-detail">
-        {total > 0 ? `${roundedProgress}%` : 'Preparing game'}
-        {item ? ` - ${item.split('/').pop()}` : ''}
+    <div className="fixed inset-0 z-40 grid place-items-center bg-base-300/95 px-6 text-base-content backdrop-blur" role="status" aria-live="polite">
+      <div className="grid w-full max-w-xs justify-items-center gap-4">
+        <span className="loading loading-spinner loading-lg text-success" aria-hidden="true" />
+        <div className="text-base font-black">Loading Assets</div>
+        <progress className="progress progress-success h-2 w-full" value={total > 0 ? roundedProgress : 18} max={100} />
+        <div className="min-h-5 text-center text-xs font-semibold text-base-content/60">
+          {total > 0 ? `${roundedProgress}%` : 'Preparing game'}
+          {item ? ` - ${item.split('/').pop()}` : ''}
+        </div>
       </div>
     </div>
   )

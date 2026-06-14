@@ -1,0 +1,5 @@
+export { default as PlayerController } from './components/PlayerController'
+export { default as Dino } from './components/Dino'
+export { default as MeteorDinoBackground } from './components/MeteorDinoBackground'
+export { default as MobileGestureControls } from './components/MobileGestureControls'
+export { clearGestureInput } from './gestureInput'

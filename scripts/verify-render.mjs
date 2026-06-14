@@ -27,10 +27,17 @@ for (const viewport of viewports) {
   })
 
   await page.goto(targetUrl, { waitUntil: 'networkidle' })
+  await page.screenshot({ path: `${outputDir}/${viewport.name}-home.png`, fullPage: true })
+
+  await page.getByRole('button', { name: /lihat detail/i }).click()
+  await page.waitForURL('**/game/dino-meteor-dodge')
+  await page.screenshot({ path: `${outputDir}/${viewport.name}-detail.png`, fullPage: true })
+
+  await page.getByRole('button', { name: /mulai/i }).click()
   await page.waitForSelector('canvas')
   await page.waitForTimeout(1200)
 
-  const screenshot = `${outputDir}/${viewport.name}.png`
+  const screenshot = `${outputDir}/${viewport.name}-game.png`
   const canvas = page.locator('canvas')
   const imageBuffer = await canvas.screenshot({ path: screenshot })
   const imageDataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`

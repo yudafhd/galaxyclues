@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/game/:code",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
